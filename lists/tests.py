@@ -98,11 +98,10 @@ class NewItemTest(TestCase):
     def test_can_save_a_POST_request_to_an_existing_list(self):
         correct_list = List.objects.create()
 
-        self.client.post(
-            'lists/{}/add_item'.format(correct_list.id,),
+        response = self.client.post(
+            '/lists/{}/add_item'.format(correct_list.id,),
             data={'item_text': 'A new item for an existing list'}
         )
-
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, 'A new item for an existing list')
